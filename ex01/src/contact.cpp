@@ -18,25 +18,36 @@ void Contact::display_contact()
     std::cout << "Darkest secret: " << secret << std::endl;
 }
 
-void PhoneBook::add_contact(Contact &c)
+std::string center(std::string& text, int width)
 {
-    contacts[index % 8] = c;
-    index++;
+    int len = text.length();
+    if (width < len)
+    {
+        text[width -1] = '.';
+        for (int i = width; i < len; i++)
+            text[i] = '\0';
+        return (text);
+    }
+    if (width == len)
+        return (text);
+    int left = (width - len) / 2;
+    int right = (width - len - left);
+    return (std::string(left, ' ') + text + std::string(right, ' '));
+
 }
 
-void PhoneBook::display_contact()
+std::string int_to_string(int i)
 {
-    if (index == 0)
-        std::cout << "\nNo contact are registered for the moment ...\n";
-    else if (index < 8)
-    {
-        for (int i = 0; i < index; i++)
-            contacts[i].display_contact();
-    }
-    else 
-    {
-        for (int i = 0; i < 8; i++)
-            contacts[i].display_contact();
-    }
-    
+    std::stringstream ss;
+    ss << i;
+    return ss.str();
+}
+
+void Contact::display_summary(int i)
+{
+    std::string index = int_to_string(i);
+    std::cout << center(index, 10) << "|";
+    std::cout << center(first_name, 10) << "|";
+    std::cout << center(last_name, 10) << "|";
+    std::cout << center(nickname, 10) << "\n";
 }
